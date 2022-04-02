@@ -58,7 +58,6 @@ services:
         container_name: php
         volumes:
             - ./:/var/www
-            - ./:/var/www/projeto-ks-back
         ports:
             - "9000:9000"
         networks:

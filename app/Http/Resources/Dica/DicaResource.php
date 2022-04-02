@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Http\Resources\Dica;
+
+use App\Http\Resources\Tipo\TipoResourceCollection;
+use App\Models\Tipo;
+use App\Services\ResponseService;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class DicaResource extends JsonResource
+{
+    public function __construct($resource, $config = array())
+    {
+        // Ensure you call the parent constructor
+        parent::__construct($resource);
+
+        $this->config = $config;
+    }
+
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return [
+            'id' => $this->id,
+            'descricao' => $this->descricao,
+            'numero' => $this->numero,
+            'veiculo_id' => $this->veiculo_id,
+            'veiculo' => $this->veiculo->show($this->veiculo_id),
+            'user_id' => $this->user_id,
+            'user' => $this->usuario->show($this->user_id),
+        ];
+    }
+
+    /**
+     * Get additional data that should be returned with the resource array.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function with($request)
+    {
+        return ResponseService::default($this->config,$this->id);
+    }
+
+    /**
+     * Customize the outgoing response for the resource.
+     *
+     * @param  \Illuminate\Http\Request
+     * @param  \Illuminate\Http\Response
+     * @return void
+     */
+    public function withResponse($request, $response)
+    {
+        $response->setStatusCode(200);
+    }
+}
