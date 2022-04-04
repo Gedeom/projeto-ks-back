@@ -44,6 +44,16 @@ class DicaController extends Controller
     }
 
     /**
+     * Display a listing last 15
+     *
+     * @return DicaResourceCollection
+     */
+    public function lasts()
+    {
+        return new DicaResourceCollection($this->dica->lasts());
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request

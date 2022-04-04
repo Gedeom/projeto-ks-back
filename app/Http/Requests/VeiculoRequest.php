@@ -46,7 +46,6 @@ class VeiculoRequest extends FormRequest
                 Rule::in(Modelo::pluck('id', 'id'))
             ],
             'versao_id' => [
-                'present',
                 'nullable',
                 Rule::in(Versao::pluck('id', 'id'))
             ],

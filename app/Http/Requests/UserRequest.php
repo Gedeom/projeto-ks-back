@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation;
@@ -26,7 +27,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'unique:users,email|email|required',
+            'email' => 'email|required',
             'name' => 'required',
         ];
     }
@@ -40,6 +41,15 @@ class UserRequest extends FormRequest
     {
         $id = (int) $this->route('user');
         $validation = $validator;
+
+        if(!$id && !$this->password){
+            $validation->errors()->add('password','Informe a senha');
+        }
+
+        if (User::hasEmail($this->email, $id)) {
+            $validation->errors()->add('email', 'Já existe esse email cadastrado!');
+        }
+
 
         if(!$id && !$this->password){
             $validation->errors()->add('password','Informe a senha');

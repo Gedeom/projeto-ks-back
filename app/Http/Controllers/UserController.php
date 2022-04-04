@@ -112,10 +112,13 @@ class UserController extends Controller
             $token = $this
                 ->user
                 ->login($credentials);
+
+            $user = User::where('email', '=', $request->email)->first();
+
         } catch (Throwable | Exception $e) {
             return ResponseService::exception('user.login', null, $e);
         }
-        return response()->json(compact('token'));
+        return response()->json(['user' => ['id' => $user->id, 'name' => $user->name], 'token' => $token]);
     }
 
     /**

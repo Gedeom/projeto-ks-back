@@ -21,6 +21,7 @@ class Versao extends Model
     public function index()
     {
         return self::selectRaw('id, descricao')
+            ->orderBy('id')
             ->get();
     }
 

@@ -20,7 +20,7 @@ class Modelo extends Model
 
     public function index()
     {
-        return self::selectRaw('modelo.id, modelo.descricao, marca_id, modelo.descricao as modelo')
+        return self::selectRaw('modelo.id, modelo.descricao, marca_id')
             ->join('marca', 'marca.id', '=', 'marca_id')
             ->orderBy('modelo.id')
             ->get();

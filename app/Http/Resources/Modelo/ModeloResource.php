@@ -26,8 +26,8 @@ class ModeloResource extends JsonResource
         return [
             'id' => $this->id,
             'descricao' => $this->descricao,
-            'marca_id' => $this->descricao,
-            'marca' => $this->marca->show($this->marca_id)
+            'marca_id' => $this->marca_id,
+            'marca' => $this->marca->descricao,
         ];
     }
 

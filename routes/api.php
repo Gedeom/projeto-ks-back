@@ -22,9 +22,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['cors']], function () {
+    Route::get('teste', function(){
+       $data = [
+           'Teste',
+           'Teste1'
+       ];
+       return response()->json(['data' => $data]);
+    });
     Route::post('login', [UserController::class, 'login'])->name('user.login');
     Route::post('user', [UserController::class, 'store'])->name('user.store');
-    Route::post('tip/search', [DicaController::class, 'search'])->name('tip.search');
+
+    //tip last 15
+    Route::get('tip/lasts', [DicaController::class, 'lasts'])->name('tip.lasts');
+
 });
 
 
@@ -55,4 +65,5 @@ Route::group(['middleware' => ['cors', 'jwt.verify']], function () {
 
     //Tip
     Route::apiResource('tip', DicaController::class);
+    Route::post('tip/search', [DicaController::class, 'search'])->name('tip.search');
 });

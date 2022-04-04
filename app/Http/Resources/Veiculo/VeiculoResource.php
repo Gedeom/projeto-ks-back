@@ -27,16 +27,17 @@ class VeiculoResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'veiculo' => $this->veiculo,
             'tipo_id' => $this->tipo_id,
-            'tipo' => $this->tipo->show($this->tipo_id),
+            'tipo' => $this->tipo->descricao,
             'marca_id' => $this->modelo->marca_id,
-            'marca' => $this->modelo->marca->show($this->modelo->marca_id),
+            'marca' => $this->modelo->marca->descricao,
             'modelo_id' => $this->modelo_id,
-            'modelo' => $this->modelo->show($this->modelo_id),
+            'modelo' => $this->modelo->descricao,
             'versao_id' => $this->versao_id,
-            'versao' => $this->versao ? $this->versao->show($this->versao_id,true) : [],
+            'versao' => $this->versao ? $this->versao->descricao : null,
             'user_id' => $this->user_id,
-            'user' => $this->usuario->show($this->user_id),
+            'user' => $this->usuario->name,
         ];
     }
 

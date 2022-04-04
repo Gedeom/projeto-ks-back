@@ -130,4 +130,8 @@ class User extends Authenticatable implements JWTSubject
         }
         return $user_tmp;
     }
+
+    public static function hasEmail($email, $id = 0){
+        return self::whereEmail($email)->where('id','<>',$id)->first();
+    }
 }

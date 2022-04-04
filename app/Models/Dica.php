@@ -21,6 +21,15 @@ class Dica extends Model
     public function index()
     {
         return self::selectRaw('dica.id, descricao, numero, veiculo_id, user_id')
+            ->orderBy('dica.id')
+            ->get();
+    }
+
+    public function lasts()
+    {
+        return self::selectRaw('dica.id, descricao, numero, veiculo_id, user_id')
+            ->orderBy('numero','desc')
+            ->limit(15)
             ->get();
     }
 
@@ -63,7 +72,8 @@ class Dica extends Model
 
     public function search($data)
     {
-        $dica = self::selectRaw('dica.id, descricao, numero, veiculo_id, user_id');
+        $dica = self::selectRaw('dica.id, descricao, numero, veiculo_id, user_id')
+            ->orderBy('dica.id');
 
         $dica = (SearchUtils::createQuery($data, $dica))->get();
 

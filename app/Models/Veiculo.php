@@ -20,13 +20,24 @@ class Veiculo extends Model
 
     public function index()
     {
-        return self::selectRaw('veiculo.id, user_id, tipo_id, modelo_id, versao_id')
+        return self::selectRaw("veiculo.id, user_id, tipo_id, modelo_id, versao_id,
+        concat_ws(' - ',tipo.descricao, marca.descricao, modelo.descricao, versao.descricao) as veiculo")
+            ->join('tipo','tipo.id','=','tipo_id')
+            ->join('modelo','modelo.id','=','modelo_id')
+            ->join('marca','marca.id','=','marca_id')
+            ->leftJoin('versao','versao.id','=','versao_id')
+            ->orderBy('veiculo.id')
             ->get();
     }
 
     public function show($id)
     {
-        $veiculo = self::selectRaw('veiculo.id, user_id, tipo_id, modelo_id, versao_id')
+        $veiculo = self::selectRaw("veiculo.id, user_id, tipo_id, modelo_id, versao_id,
+        concat_ws(' - ',tipo.descricao, marca.descricao, modelo.descricao, versao.descricao) as veiculo")
+            ->join('tipo','tipo.id','=','tipo_id')
+            ->join('modelo','modelo.id','=','modelo_id')
+            ->join('marca','marca.id','=','marca_id')
+            ->leftJoin('versao','versao.id','=','versao_id')
             ->where('veiculo.id', '=', $id)
             ->first();
 
@@ -63,7 +74,12 @@ class Veiculo extends Model
 
     public function search($data)
     {
-        $veiculo = self::selectRawselectRaw('veiculo.id, user_id, tipo_id, modelo_id, versao_id');
+        $veiculo = self::selectRawselectRaw("veiculo.id, user_id, tipo_id, modelo_id, versao_id,
+        concat_ws(' - ',tipo.descricao, marca.descricao, modelo.descricao, versao.descricao) as veiculo")
+            ->join('tipo','tipo.id','=','tipo_id')
+            ->join('modelo','modelo.id','=','modelo_id')
+            ->join('marca','marca.id','=','marca_id')
+            ->leftJoin('versao','versao.id','=','versao_id');
 
         $veiculo = (SearchUtils::createQuery($data, $veiculo))->get();
 

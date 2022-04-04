@@ -15,26 +15,29 @@ services:
         working_dir: /var/www/
         volumes:
             - ./:/var/www
+        ports:
+            - 8080:8000
+        command: bash -c 'php artisan serve --host 0.0.0.0'
         depends_on:
             - redis
         networks:
             - laravel
 
-    # nginx
-    nginx:
-        image: nginx:stable-alpine
-        container_name: nginx
-        restart: always
-        ports:
-            - "8080:80"
-        volumes:
-            - ./:/var/www
-            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-        depends_on:
-            - php
-            - mysql
-        networks:
-            - laravel
+    #    # nginx
+    #    nginx:
+    #        image: nginx:stable-alpine
+    #        container_name: nginx
+    #        restart: always
+    #        ports:
+    #            - "9002:80"
+    #        volumes:
+    #            - ./:/var/www
+    #            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    #        depends_on:
+    #            - php
+    #            - mysql
+    #        networks:
+    #            - laravel
 
     # mariadb
     mysql:
@@ -46,7 +49,7 @@ services:
         volumes:
             - ./docker/init:/docker-entrypoint-initdb.d
         ports:
-            - "3306:3306"
+            - "3307:3306"
         networks:
             - laravel
 
@@ -64,25 +67,6 @@ services:
             - laravel
         working_dir: /var/www
 
-    # queue
-    queue:
-        container_name: queue
-        image: projeto-ks-back
-        build:
-            args:
-                user: gedeom
-                uid: 1000
-            context: ./
-            dockerfile: Dockerfile
-        restart: unless-stopped
-        volumes:
-            - ./:/var/www/projeto-ks-back
-        depends_on:
-            - redis
-            - projeto-ks-back
-        networks:
-            - laravel
-
     #redis
     redis:
         container_name: redis
@@ -90,14 +74,13 @@ services:
         networks:
             - laravel
 
-        #composer
+    #composer
     composer:
         container_name: composer
         build: .
         depends_on:
             - php
             - redis
-            - queue
         volumes:
             - ./:/var/www
         networks:

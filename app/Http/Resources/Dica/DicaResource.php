@@ -29,10 +29,17 @@ class DicaResource extends JsonResource
             'id' => $this->id,
             'descricao' => $this->descricao,
             'numero' => $this->numero,
+            'tipo' => $this->veiculo->tipo->descricao,
+            'tipo_id' => $this->veiculo->tipo_id,
             'veiculo_id' => $this->veiculo_id,
-            'veiculo' => $this->veiculo->show($this->veiculo_id),
+            'marca_id' => $this->veiculo->modelo->marca_id,
+            'marca' => $this->veiculo->modelo->marca->descricao,
+            'modelo_id' => $this->veiculo->modelo_id,
+            'modelo' => $this->veiculo->modelo->descricao,
+            'versao_id' => $this->veiculo->versao_id,
+            'versao' => $this->veiculo->versao->descricao ?? null,
             'user_id' => $this->user_id,
-            'user' => $this->usuario->show($this->user_id),
+            'user' => $this->usuario->name,
         ];
     }
 
