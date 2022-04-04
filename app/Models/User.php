@@ -91,6 +91,7 @@ class User extends Authenticatable implements JWTSubject
             $user->name = $fields['name'];
             $user->email = $fields['email'];
             $user->password = !empty($fields['password']) ? Hash::make($fields['password']) : $user->password;
+            $user->img = !empty($fields['img']) ? $fields['img'] : $user->img;
             $user->save();
 
             DB::commit();

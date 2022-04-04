@@ -118,7 +118,7 @@ class UserController extends Controller
         } catch (Throwable | Exception $e) {
             return ResponseService::exception('user.login', null, $e);
         }
-        return response()->json(['user' => ['id' => $user->id, 'name' => $user->name], 'token' => $token]);
+        return response()->json(['user' => ['id' => $user->id, 'name' => $user->name, 'img' => $user->img], 'token' => $token]);
     }
 
     /**
